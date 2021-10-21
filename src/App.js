@@ -1,20 +1,37 @@
 import { useState, useEffect } from "react";
 import Question from "./components/Question";
 import Answers from "./components/Answers";
+import Utils from "./Utils";
 
-const images_number = [...Array(60).keys()];
 
 function App() {
   const [qnumber, setNumber] = useState(0);
   const [isInit, setIsInit] = useState(true);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("answers", "");
   }, []);
 
+  useEffect(() => {
+    if(isFinished){
+      let result  = localStorage.getItem("answers")
+      result = Array.from(String(result), Number)
+      let helper = new Utils
+      console.log(helper.score(result))
+    }
+   
+  }, [isFinished])
+
   const handler = (event, value) => {
     setNumber(qnumber + 1);
-    setIsInit(false);
+    if (qnumber > 0){
+      setIsInit(false);
+    }
+    if(qnumber===59){
+      setIsFinished(true)
+    }
+    
     let answers = localStorage.getItem("answers").concat(value);
     localStorage.setItem("answers", answers);
   };
@@ -24,6 +41,7 @@ function App() {
     let answers = localStorage.getItem("answers").slice(0, -1);
     localStorage.setItem("answers", answers);
   };
+
 
   return (
     <main>

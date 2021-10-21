@@ -1,6 +1,4 @@
 import React from "react";
-import Answers from "./Answers";
-
 
 export default function Question({question }) {
   return (
