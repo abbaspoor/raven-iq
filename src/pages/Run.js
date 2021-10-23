@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Question from "../components/Question";
-import Answers from "../components/Answers";
 import { Redirect } from "react-router-dom";
+import Choices from "../components/Choices";
+import Layout from "../layout/Layout";
 
 export default function Items() {
   const [question_number, setNumber] = useState(0);
@@ -18,9 +19,7 @@ export default function Items() {
 
   const handler = (event, value) => {
     setNumber(question_number + 1);
-    if (question_number > 0) {
-      setIsInit(false);
-    }
+    setIsInit(false);
     if (question_number === 59) {
       setIsFinished(true);
     }
@@ -32,25 +31,30 @@ export default function Items() {
     setNumber(question_number - 1);
     let answers = localStorage.getItem("answers").slice(0, -1);
     localStorage.setItem("answers", answers);
+    if (question_number === 1) {
+      setIsInit(true);
+    }
   };
 
   return (
-    <div>
-      <main>
-        <Question question={"../iq/" + question_number} />
-        <div id="answers">
-          <Answers
-            key={question_number}
-            questionNumber={question_number}
-            handler={handler}
-          />
-        </div>
-        {isInit ? null : (
-          <button onClick={previous} style={{ color: "white" }}>
-            back
-          </button>
-        )}
-      </main>
-    </div>
+    <Layout>
+      <Question question={"../iq/" + question_number} />
+      <div id="answers" className="row">
+        <Choices
+          key={question_number}
+          questionNumber={question_number}
+          handler={handler}
+        />
+      </div>
+      {isInit ? null : (
+        <button
+          className="btn mt-3 btn-warning text-black"
+          onClick={previous}
+          style={{ color: "white" }}
+        >
+          back
+        </button>
+      )}
+    </Layout>
   );
 }

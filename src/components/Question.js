@@ -3,7 +3,7 @@ import React from "react";
 export default function Question({question }) {
   return (
     <div id="question">
-      <img alt="" src={'../iq/' + question + '/' + 0 +'.svg'} />
+      <img alt="" className="img-fluid rounded" src={'../iq/' + question + '/' + 0 +'.svg'} />
     </div>
   );
 }

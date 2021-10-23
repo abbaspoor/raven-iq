@@ -1,7 +1,7 @@
 import React from "react";
 import Choice from "./Choice";
 
-export default function Answers({ questionNumber, handler }) {
+export default function Choices({ questionNumber, handler }) {
 let choices = 0
   if (questionNumber > 23) {
     choices = Array.from({ length: 8 }, (x, i) => i+1);
